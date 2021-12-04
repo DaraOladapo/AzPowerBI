@@ -18,18 +18,14 @@ namespace DaraOladapo
     public class CostManagement
     {
         private readonly ILogger<CostManagement> _logger;
-
-        public CostManagement(ILogger<CostManagement> log)
-        {
-            _logger = log;
-        }
         private readonly IAzureCostManagement _azureCostManagement;
 
-
-        public CostManagement(IAzureCostManagement azureCostManagement)
+        public CostManagement(ILogger<CostManagement> log, IAzureCostManagement azureCostManagement)
         {
-            this._azureCostManagement = azureCostManagement;
+            _logger = log;
+            _azureCostManagement = azureCostManagement;
         }
+
 
         [FunctionName("CostManagement")]
         [OpenApiOperation(operationId: "Run", tags: new[] { "name" })]
@@ -46,10 +42,10 @@ namespace DaraOladapo
             var subscriptionId=Environment.GetEnvironmentVariable("SubscriptionId");
 
             // Get the cost management data from Azure
-            var azureCostData = _azureCostManagement.GetCostManagementData(_logger, subscriptionId, int.Parse(startDate), int.Parse(endDate));
-            string responseMessage = JsonConvert.SerializeObject(azureCostData);
+            var azureCostData = _azureCostManagement.GetCostManagementDataResponse(_logger, subscriptionId, int.Parse(startDate), int.Parse(endDate));
+            //string responseMessage = JsonConvert.SerializeObject(azureCostData);
 
-            return new OkObjectResult(responseMessage);
+            return new OkObjectResult(azureCostData);
         }
     }
 }

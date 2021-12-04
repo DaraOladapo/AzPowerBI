@@ -20,7 +20,7 @@ namespace DaraOladapo
         private readonly ILogger<CostManagementRaw> _logger;
         private readonly IAzureCostManagement _azureCostManagement;
 
-        public CostManagementRaw(ILogger<CostManagement> log, IAzureCostManagement azureCostManagement)
+        public CostManagementRaw(ILogger<CostManagementRaw> log, IAzureCostManagement azureCostManagement)
         {
             _logger = log;
             _azureCostManagement = azureCostManagement;

@@ -15,20 +15,20 @@ using Newtonsoft.Json;
 
 namespace DaraOladapo
 {
-    public class CostManagement
+    public class CostManagementRaw
     {
-        private readonly ILogger<CostManagement> _logger;
+        private readonly ILogger<CostManagementRaw> _logger;
         private readonly IAzureCostManagement _azureCostManagement;
 
-        public CostManagement(ILogger<CostManagement> log, IAzureCostManagement azureCostManagement)
+        public CostManagementRaw(ILogger<CostManagement> log, IAzureCostManagement azureCostManagement)
         {
             _logger = log;
             _azureCostManagement = azureCostManagement;
         }
 
 
-        [FunctionName("CostManagement")]
-        [OpenApiOperation(operationId: "Run", tags: new[] { "startDate","endDate" })]
+        [FunctionName("CostManagementRaw")]
+               [OpenApiOperation(operationId: "Run", tags: new[] { "startDate","endDate" })]
         [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
         [OpenApiParameter(name: "name", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **Name** parameter")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
@@ -42,7 +42,7 @@ namespace DaraOladapo
             var subscriptionId=Environment.GetEnvironmentVariable("SubscriptionId");
 
             // Get the cost management data from Azure
-            var azureCostData = _azureCostManagement.GetCostManagementData(_logger, subscriptionId, int.Parse(startDate), int.Parse(endDate));
+            var azureCostData = _azureCostManagement.GetCostManagementDataResponse(_logger, subscriptionId, int.Parse(startDate), int.Parse(endDate));
             string responseMessage = JsonConvert.SerializeObject(azureCostData);
 
             return new OkObjectResult(azureCostData);

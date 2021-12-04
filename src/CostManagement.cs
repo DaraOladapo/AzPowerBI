@@ -42,7 +42,7 @@ namespace DaraOladapo
             var subscriptionId=Environment.GetEnvironmentVariable("SubscriptionId");
 
             // Get the cost management data from Azure
-            var azureCostData = _azureCostManagement.GetCostManagementDataResponse(_logger, subscriptionId, int.Parse(startDate), int.Parse(endDate));
+            var azureCostData = _azureCostManagement.GetCostManagementData(_logger, subscriptionId, int.Parse(startDate), int.Parse(endDate));
             //string responseMessage = JsonConvert.SerializeObject(azureCostData);
 
             return new OkObjectResult(azureCostData);

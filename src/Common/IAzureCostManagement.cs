@@ -7,7 +7,7 @@ namespace AzCostPowerBI.Common
 {
     public interface IAzureCostManagement
     {
-        //public Task<List<CostManagementResponse>> GetCostManagementData(ILogger log, string subscriptionId, int startDate, int endDate); 
+        public List<CostManagementResponse> GetCostManagementData(ILogger log, string subscriptionId, int startDate, int endDate); 
         public string GetCostManagementDataResponse(ILogger log, string subscriptionId, int startDate, int endDate); 
     }
     //public interface IAzureBill
